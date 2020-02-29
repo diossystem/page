@@ -13,9 +13,17 @@ class PageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-          $this->publishes([
-              __DIR__.'/../database/migrations/' => database_path('migrations')
-          ], 'migrations');
+        $this->publishes([
+            __DIR__.'/../database/migrations/base' => database_path('migrations')
+        ], 'page-migrations');
+
+        $this->publishes([
+            __DIR__.'/../database/migrations/multipurpose' => database_path('migrations')
+        ], 'multipurpose-columns-of-page-migrations');
+
+        $this->publishes([
+            __DIR__.'/../database/migrations/types' => database_path('migrations')
+        ], 'entity-types-of-page-migrations');
     }
 
     /**
