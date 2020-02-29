@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DiosSystem\\Page\\": "src"
+            "Dios\\System\\Page\\": "src"
         }
     },
     "minimum-stability": "dev"
