@@ -1,0 +1,23 @@
+{
+    "name": "diossystem/page",
+    "description": "The Page for Dios System",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oleg Dmitrochenko",
+            "email": "dmitrochenkooleg@gmail.com"
+        }
+    ],
+    "requires": {
+       "php": ">=7.0",
+       "illuminate/database": "5.5.*",
+       "illuminate/support": "5.5.*",
+    },
+    "autoload": {
+        "psr-4": {
+            "DiosSystem\\Page\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}
