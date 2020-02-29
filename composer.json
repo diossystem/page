@@ -12,11 +12,18 @@
     "requires": {
        "php": ">=7.0",
        "illuminate/database": "5.5.*",
-       "illuminate/support": "5.5.*",
+       "illuminate/support": "5.5.*"
     },
     "autoload": {
         "psr-4": {
             "Dios\\System\\Page\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dios\\System\\Page\\PageServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev"
