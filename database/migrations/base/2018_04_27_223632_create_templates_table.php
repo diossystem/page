@@ -114,7 +114,6 @@ class CreateTemplatesTable extends Migration
               * Может использоваться при отображении списка шаблонов.
               */
              $table->smallInteger('priority')->default(0)->index();
-
         });
     }
 
