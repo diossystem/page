@@ -16,8 +16,6 @@ class Page extends Model
         'subtitle',
         'content',
         'description',
-        'cover_id',
-        'category_id',
         'description_tag',
         'keywords_tag',
         'author_id',
