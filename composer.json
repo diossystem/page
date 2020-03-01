@@ -1,6 +1,6 @@
 {
     "name": "diossystem/page",
-    "description": "The Page for Dios System",
+    "description": "The Page component",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -12,7 +12,8 @@
     "requires": {
        "php": ">=7.0",
        "illuminate/database": "5.5.*",
-       "illuminate/support": "5.5.*"
+       "illuminate/support": "5.5.*",
+       "belca/support-constants": "^1.0"
     },
     "autoload": {
         "psr-4": {
