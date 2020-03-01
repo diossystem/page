@@ -2,6 +2,7 @@
 
 namespace Dios\System\Page\Models;
 
+use Dios\System\Page\Enums\PageState;
 use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
@@ -71,6 +72,6 @@ class Page extends Model
 
     public function scopeActive($query)
     {
-        return $query->state('published');
+        return $query->state(PageState::PUBLISHED);
     }
 }
