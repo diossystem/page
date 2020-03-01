@@ -31,7 +31,8 @@ class CreateAdditionalFieldsOfPagesTable extends Migration
              *
              * Также можно сохранять массивы значений, например, список изображений.
              */
-            $table->text('values')->nullable(); // json
+            $table->text('values')->nullable();
+            // $table->json('values')->nullable(); // change comments to use the json type
 
             /**
              * Нельзя добавить для одной страницы два одинаковых ДП. Все должно
