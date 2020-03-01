@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Dios\System\Page\Enums\PageState;
 
 /**
  * Pages of the application.
@@ -35,7 +36,8 @@ class CreatePagesTable extends Migration
              *
              * Определяет доступность и готовность страницы.
              */
-            $table->enum('state', ['draft', 'published', 'unpublished']/*\PageStatus::getConstants()*/)->default('draft'/*\PageStatus::DRAFT*/)->index();
+            $table->enum('state', PageState::list())->default(PageState::DRAFT)->index();
+            //$table->string('state')->default(PageState::DRAFT)->index();
 
             /**
              * Человеко-понятный URL.
@@ -55,16 +57,6 @@ class CreatePagesTable extends Migration
              * соответствовать значению поля slug.
              */
             $table->string('link')->nullable()->index();
-
-            /**
-             * Приоритет отображения.
-             *
-             * Для сортировки записей не использующих сортировку по дате.
-             *
-             * Например, для страницы списка услуг, где список услуг должен быть
-             * в определенном порядке.
-             */
-            $table->smallInteger('priority')->default(0)->index();
 
             /**
              * Заголовок страницы или статьи.
@@ -153,6 +145,16 @@ class CreatePagesTable extends Migration
             $table->unsignedInteger('parent_id')->nullable()->index();
 
             /**
+             * Приоритет отображения.
+             *
+             * Для сортировки записей не использующих сортировку по дате.
+             *
+             * Например, для страницы списка услуг, где список услуг должен быть
+             * в определенном порядке.
+             */
+            $table->smallInteger('priority')->default(0)->index();
+
+            /**
              * Важная страница.
              *
              * Значение "true" означает важность этой страницы и может использоваться
@@ -161,6 +163,8 @@ class CreatePagesTable extends Migration
              * Отсутствие этого значения делает страницу обычной.
              */
             $table->boolean('important')->default(false);
+
+            $table->index(['state', 'link']);
         });
     }
 
