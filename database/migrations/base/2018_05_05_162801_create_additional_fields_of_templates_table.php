@@ -88,8 +88,6 @@ class CreateAdditionalFieldsOfTemplatesTable extends Migration
              */
             $table->boolean('active')->default(true)->index();
 
-            // Также могут задаваться начальные данные, хотя это вряд ли.
-
             /**
              * Для одного шаблона нельзя задать два одинаковых дополнительных поля.
              */
