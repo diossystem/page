@@ -13,7 +13,9 @@
        "php": ">=7.0",
        "illuminate/database": "5.5.*",
        "illuminate/support": "5.5.*",
-       "belca/support-constants": "^1.0"
+       "illuminate/http": "5.5.*",
+       "belca/support-constants": "1.*",
+       "belca/support-array": "dev-master"
     },
     "autoload": {
         "psr-4": {
