@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Values of additional fields of pages
+ * Values of additional fields of pages.
  */
-class CreateAdditionalFieldsOfPagesTable extends Migration
+class CreateAdditionalFieldPageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class CreateAdditionalFieldsOfPagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('additional_fields_of_pages', function (Blueprint $table) {
+        Schema::create('additional_field_page', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('page_id')->index();
             $table->unsignedInteger('additional_field_id')->index();
@@ -49,6 +49,6 @@ class CreateAdditionalFieldsOfPagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('additional_fields_of_pages');
+        Schema::dropIfExists('additional_field_page');
     }
 }

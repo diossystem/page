@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Dios\System\Page\Enums\TemplateType;
 
 class AddTypeToTemplatesTable extends Migration
 {
@@ -26,7 +27,7 @@ class AddTypeToTemplatesTable extends Migration
              * реализация, например image, category, product, которые будут
              * использоваться для отображения изображения, категории или продукта.
              */
-            $table->string('type')->default('page')->index();
+            $table->string('type')->default(TemplateType::DEFAULT)->index();
             // TODO Мнимая страница или нулевая страница - страница, которая
             // может иметь все те же данные, что и обычная страница,
             // но поисковая оптимизация и ссылки могут не использоваться.

@@ -4,6 +4,9 @@ namespace Dios\System\Page\Enums;
 
 use Belca\Support\AbstractEnum;
 
+/**
+ * States of pages.
+ */
 class PageState extends AbstractEnum
 {
     const DEFAULT = self::DRAFT;

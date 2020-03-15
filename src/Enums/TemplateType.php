@@ -4,14 +4,17 @@ namespace Dios\System\Page\Enums;
 
 use Belca\Support\AbstractEnum;
 
+/**
+ * Types of templates (as the types of entities).
+ */
 class TemplateType extends AbstractEnum
 {
     const DEFAULT = self::PAGE;
 
     /**
-     * The page type.
+     * The page
      *
-     * The type is used for pages that showing data of a page.
+     * The type is used for pages that show data of a page.
      */
     const PAGE = 'page';
 }

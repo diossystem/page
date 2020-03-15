@@ -2,65 +2,126 @@
 
 namespace Dios\System\Page\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Template extends Model
 {
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
     public $timestamps = false;
 
-    protected $fillable = ['code_name', 'title', 'description'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'code_name',
+        'title',
+        'description'
+    ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'options' => 'array',
         'active' => 'boolean'
     ];
 
-    public function children()
+    /**
+     * Returns child templates.
+     *
+     * @return HasMany
+     */
+    public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    public function additionalFields()
+    /**
+     * Returns additional fields of the template.
+     *
+     * @return BelongsToMany
+     */
+    public function additionalFields(): BelongsToMany
     {
-        return $this->hasMany(AdditionalFieldsOfTemplates::class);
+        return $this
+            ->belongsToMany(AdditionalField::class)
+            ->using(AdditionalFieldsOfTemplates::class)
+            ->withPivot([
+                'manual_control',
+                'rules',
+                'active',
+                'required',
+                'primary',
+                'important',
+                'priority'
+            ])
+        ;
     }
 
-    public function afs()
+    /**
+     * The alias of the additionalFields function.
+     *
+     * @return BelongsToMany
+     */
+    public function afs(): BelongsToMany
     {
         return $this->additionalFields();
     }
 
-    public function pages()
+    /**
+     * Returns pages of the template.
+     *
+     * @return HasMany
+     */
+    public function pages(): HasMany
     {
         return $this->hasMany(Page::class);
     }
 
-    public function scopeParent($query, $parent_id = 0)
+    /**
+     * Returns templates that have the given ID of parent.
+     *
+     * @param  Builder $query
+     * @param  int     $parentId
+     * @return Builder
+     */
+    public function scopeParent(Builder $query, int $parentId = 0): Builder
     {
-        return $query->where('parent_id', $parent_id);
+        return $query->where('parent_id', $parentId);
     }
 
-    public function scopeActive($query, $state = true)
+    /**
+     * Returns templates that have the active state or another given state.
+     *
+     * @param  Builder $query
+     * @param  bool    $state
+     * @return Builder
+     */
+    public function scopeActive(Builder $query, bool $state = true): Builder
     {
         return $query->where('active', $state);
     }
 
-    public function scopeName($query, $name)
+    /**
+     * Returns templates that have the given names.
+     *
+     * @param  Builder $query
+     * @param  string  ...$name
+     * @return Builder
+     */
+    public function scopeName(Builder $query, string ...$name): Builder
     {
-        if (is_array($name)) {
-            return $query->whereIn('code_name', $name);
-        }
-
-        return $query->where('code_name', $name);
-    }
-
-    public function getNameAttribute()
-    {
-        return $this->attributes['code_name'];
-    }
-
-    public function setNameAttribute($value)
-    {
-        $this->attributes['code_name'] = str_slug($value);
+        return $query->whereIn('code_name', $name);
     }
 }

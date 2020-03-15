@@ -5,14 +5,14 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Additional fields of templates
+ * Additional fields of templates.
  *
  * Дополнительные поля шаблонов создают отношение между дополнительными полями
  * и шаблонами страниц.
  * Они также содержат набор дополнительных настроек для работы с конкретными
  * шаблонами.
  */
-class CreateAdditionalFieldsOfTemplatesTable extends Migration
+class CreateAdditionalFieldTemplateTable extends Migration
 {
     /**
      * Run the migrations.
@@ -21,7 +21,7 @@ class CreateAdditionalFieldsOfTemplatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('additional_fields_of_templates', function (Blueprint $table) {
+        Schema::create('additional_field_template', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('template_id')->index();
             $table->unsignedInteger('additional_field_id')->index();
@@ -102,6 +102,6 @@ class CreateAdditionalFieldsOfTemplatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('additional_fields_of_templates');
+        Schema::dropIfExists('additional_field_template');
     }
 }

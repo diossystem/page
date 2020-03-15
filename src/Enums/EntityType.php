@@ -4,14 +4,17 @@ namespace Dios\System\Page\Enums;
 
 use Belca\Support\AbstractEnum;
 
-class PageType extends AbstractEnum
+/**
+ * Types of entities of pages.
+ */
+class EntityType extends AbstractEnum
 {
     const DEFAULT = self::PAGE;
 
     /**
-     * Страница.
+     * The page
      *
-     * Отображает данные указанной страницы.
+     * Shows data a current page.
      */
     const PAGE = 'page';
 }
