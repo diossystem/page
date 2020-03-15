@@ -59,7 +59,7 @@ class AdditionalFieldsOfPages extends Pivot
     /**
      * Returns an own page.
      *
-     * @return BelongsTo 
+     * @return BelongsTo
      */
     public function page(): BelongsTo
     {
