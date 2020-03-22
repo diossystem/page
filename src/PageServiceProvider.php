@@ -13,6 +13,8 @@ class PageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'diossystem-page');
+
         $this->publishes([
             __DIR__.'/../database/migrations/base' => database_path('migrations')
         ], 'page-migrations');
