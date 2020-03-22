@@ -3,6 +3,7 @@
 namespace Dios\System\Page\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -45,6 +46,16 @@ class Template extends Model
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
+    }
+
+    /**
+     * Returns a parent of the template.
+     *
+     * @return BelongsTo
+     */
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class);
     }
 
     /**
@@ -96,7 +107,7 @@ class Template extends Model
      * @param  int     $parentId
      * @return Builder
      */
-    public function scopeParent(Builder $query, int $parentId = 0): Builder
+    public function scopeParentId(Builder $query, int $parentId = 0): Builder
     {
         return $query->where('parent_id', $parentId);
     }
