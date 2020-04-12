@@ -2,16 +2,16 @@
 
 namespace Dios\System\Page\Exceptions;
 
-use RuntimeException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PageNotFoundException extends RuntimeException
+class PageNotFoundException extends NotFoundHttpException
 {
     /**
-     * The state of the base message.
+     * A URL of the requested page.
      *
-     * @var bool
+     * @var string|null
      */
-    protected $hiddenBaseMessage = false;
+    protected $url;
 
     /**
      * Sets a URL to the exception message.
@@ -21,6 +21,8 @@ class PageNotFoundException extends RuntimeException
      */
     public function setUrl(string $url = null): self
     {
+        $this->url = $url;
+
         $message = $url
             ? 'Page not found: '.$url
             : 'Page not found'
@@ -32,5 +34,15 @@ class PageNotFoundException extends RuntimeException
         ;
 
         return $this;
+    }
+
+    /**
+     * Returns the set URL or null.
+     *
+     * @return string|null
+     */
+    public function getUrl()
+    {
+        return $this->url ?? null;
     }
 }
