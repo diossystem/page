@@ -2,10 +2,10 @@
 
 namespace Dios\System\Page\Http\Controllers\Website;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Dios\System\Page\GetsPages;
 use Dios\System\Page\Models\Page;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 /**

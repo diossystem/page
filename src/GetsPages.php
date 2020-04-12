@@ -2,9 +2,9 @@
 
 namespace Dios\System\Page;
 
-use Illuminate\Http\Response;
 use Dios\System\Page\Models\Page;
 use Dios\System\Page\Exceptions\PageNotFoundException;
+use Illuminate\Http\Response;
 
 /**
  * The trait gets pages of the Page model.

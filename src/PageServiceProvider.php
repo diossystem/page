@@ -20,10 +20,6 @@ class PageServiceProvider extends ServiceProvider
         ], 'page-migrations');
 
         $this->publishes([
-            __DIR__.'/../database/migrations/multipurpose' => database_path('migrations')
-        ], 'multipurpose-columns-of-page-migrations');
-
-        $this->publishes([
             __DIR__.'/../database/migrations/types' => database_path('migrations')
         ], 'entity-types-of-page-migrations');
     }

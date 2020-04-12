@@ -2,8 +2,8 @@
 
 namespace Dios\System\Page\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Additional fields of pages.
