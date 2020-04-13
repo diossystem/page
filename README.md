@@ -1,10 +1,35 @@
 # The Page component
 
+The Page component for Laravel.
+
+Build your website using the Page. A page is the foundation of all websites.
+
 ## Introduction
+
+The package includes basic functions to work with pages of a website:
+- getting published pages;
+- the maintenance mode;
+- the routing (manual setting);
+- templates and additional fields of pages;
+- the foundation for SEO.
 
 ## Installation and setting
 
-1. Композер, Laravel
+You must install the package after installing Laravel.
+
+Install the package using **Composer**.
+
+```bash
+composer require "dios/page:0.1.*"
+```
+
+Use migrations to prepare tables to the package.
+
+```bash
+php artisan vendor:publish --tag=page-migrations
+```
+
+You may add new or change existing columns, but follow recommendations in the migrations.
 
 ### Routes
 
@@ -84,8 +109,121 @@ At the third place, you must add in your RouteServiceProvider the basic files to
 
 **Example: Your RouteServiceProvider**
 ```php
+namespace App\Providers;
 
+use Dios\System\Page\Http\Middlewares\MaintenanceMode;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+
+class RouteServiceProvider extends ServiceProvider
+{
+    protected $namespace = 'App\Http\Controllers';
+
+    protected $systemNamespace = 'App\Http\Controllers\System';
+
+    protected $websiteNamespace = 'App\Http\Controllers\Website';
+
+    /**
+     * Defines the routes for the application.
+     *
+     * @return void
+     */
+    public function map()
+    {
+        $this->mapSystemApiRoutes();
+        $this->mapApiRoutes();
+        $this->mapWebsiteApiRoutes();
+        $this->mapSystemRoutes();
+        $this->mapWebRoutes();
+        $this->mapWebsiteRoutes();
+    }
+
+    /**
+     * Includes API routes for the application.
+     *
+     * @return void
+     */
+    protected function mapApiRoutes()
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'))
+        ;
+    }
+
+    /**
+     * Includes routes for the application. Registers the homepage of the website.
+     *
+     * @return void
+     */
+    protected function mapWebRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'))
+        ;
+    }
+
+    /**
+     * Includes system API routes.
+     *
+     * @return void
+     */
+    protected function mapSystemApiRoutes()
+    {
+        Route::middleware(['api'])
+            ->namespace($this->systemNamespace)
+            ->group(base_path('routes/system-api.php'))
+        ;
+    }
+
+    /**
+     * Includes system routes.
+     *
+     * @return void
+     */
+    protected function mapSystemRoutes()
+    {
+        Route::middleware(['web'])
+             ->namespace($this->systemNamespace)
+             ->group(base_path('routes/system.php'))
+        ;
+    }
+
+    /**
+     * Includes API routes to get data of pages of the website.
+     *
+     * @return void
+     */
+    protected function mapWebsiteApiRoutes()
+    {
+        Route::middleware([MaintenanceMode::class, 'api'])
+            ->namespace($this->websiteNamespace)
+            ->group(base_path('routes/website-api.php'))
+        ;
+    }
+
+    /**
+     * Includes routes to get pages of the website.
+     *
+     * @return void
+     */
+    protected function mapWebsiteRoutes()
+    {
+        Route::middleware([MaintenanceMode::class, 'web'])
+            ->namespace($this->websiteNamespace)
+            ->group(base_path('routes/website.php'))
+        ;
+    }
+}
 ```
+
+You can change this structure by following the recommendations.
+
+- TODO Описать каждый файл, что в него можно добавлять, в каком порядке они должны идти.
+
+Add your own routes to manage your website in 'routes/system-api.php' and 'routes/system.php'.
 
 Добавление своих маршрутов и контроллеров для веб-страниц.
 
