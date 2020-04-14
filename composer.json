@@ -9,12 +9,16 @@
             "email": "dmitrochenkooleg@gmail.com"
         }
     ],
-    "requires": {
+    "require": {
        "php": ">=7.0",
-       "illuminate/database": "5.5.*",
-       "illuminate/support": "5.5.*",
-       "illuminate/http": "5.5.*",
+       "illuminate/database": "5.* || 6.* || 7.*",
+       "illuminate/support": "5.* || 6.* || 7.*",
+       "illuminate/http": "5.5.* || 6.* || 7.*",
        "belca/support-constants": "1.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.5.x-dev",
+        "orchestra/database": "~3.5"
     },
     "autoload": {
         "psr-4": {
