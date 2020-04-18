@@ -21,7 +21,6 @@ class Page extends Model
     protected $fillable = [
         'published_at',
         'priority',
-        'parent_id',
         'important',
         'title',
         'state',
@@ -30,9 +29,6 @@ class Page extends Model
         'description',
         'description_tag',
         'keywords_tag',
-        'author_id',
-        'editor_id',
-        'template_id',
     ];
 
     /**
@@ -145,13 +141,18 @@ class Page extends Model
     /**
      * Returns active pages.
      * An active page is a page whose the state is PUBLISHED.
+     * Set 'false' to $active to get inactive pages.
      *
      * @param  Builder $query
+     * @param  bool    $active
      * @return Builder
      */
-    public function scopeActive(Builder $query): Builder
+    public function scopeActive(Builder $query, bool $active = true): Builder
     {
-        return $query->state(PageState::PUBLISHED);
+        return $active
+            ? $query->state(PageState::PUBLISHED)
+            : $query->where('state', '<>', PageState::PUBLISHED)
+        ;
     }
 
     /**
@@ -172,6 +173,9 @@ class Page extends Model
      * A published page is a page whose a date of publication greater or equal
      * than the current date.
      *
+     * WARNING: The NOW() function do not work with SQLite.
+     * Set $currentDate with an instance of DateTime, such as "new DateTime('now')".
+     *
      * @param  Builder  $query
      * @param  DateTime $currentDate
      * @return Builder
@@ -179,8 +183,8 @@ class Page extends Model
     public function scopePublished(Builder $query, DateTime $currentDate = null): Builder
     {
         return $currentDate
-            ? $query->whereRaw('published_at < ?', $currentDate->format('Y-m-d H:i:s'))
-            : $query->whereRaw('published_at < NOW()')
+            ? $query->whereRaw('published_at <= ?', $currentDate->format('Y-m-d H:i:s'))
+            : $query->whereRaw('published_at <= NOW()')
         ;
     }
 
