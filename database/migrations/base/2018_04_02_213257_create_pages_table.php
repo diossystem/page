@@ -125,7 +125,7 @@ class CreatePagesTable extends Migration
              *
              * Ссылается на таблицу 'users'.
              */
-            $table->unsignedInteger('editor_id')->index();
+            $table->unsignedInteger('editor_id')->nullable()->index();
 
             /**
              * Родительская страница.
