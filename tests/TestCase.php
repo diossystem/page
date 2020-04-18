@@ -1,6 +1,6 @@
 <?php
 
-namespace Dios\System\Page\Tests;
+namespace Tests;
 
 use Dios\System\Page\PageServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
@@ -16,6 +16,8 @@ class TestCase extends OrchestraTestCase
     protected function setUp()
     {
         parent::setUp();
+
+        $this->withFactories(__DIR__ . '/../database/factories');
 
         $this->loadMigrationsFrom([
             '--realpath' => realpath(__DIR__.'/../database/migrations/base'),

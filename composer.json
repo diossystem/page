@@ -22,8 +22,16 @@
     },
     "autoload": {
         "psr-4": {
-            "Dios\\System\\Page\\": "src",
-            "Dios\\System\\Page\\Tests\\": "tests"
+            "Dios\\System\\Page\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "database/seeds/",
+            "database/factories/"
+        ],
+        "psr-4": {
+            "Tests\\": "tests"
         }
     },
     "extra": {

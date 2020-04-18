@@ -1,12 +1,12 @@
 <?php
 
-namespace Dios\System\Page\Tests\Unit\Migrations;
+namespace Tests\Unit\Migrations;
 
 use Dios\System\Page\Enums\PageState;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
-use Dios\System\Page\Tests\TestCase;
+use Tests\TestCase;
 
 class PageTest extends TestCase
 {
