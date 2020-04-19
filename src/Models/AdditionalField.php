@@ -21,10 +21,8 @@ class AdditionalField extends Model
      * @var array
      */
     protected $fillable = [
-        'code_name',
         'title',
         'description',
-        'type'
     ];
 
     /**
