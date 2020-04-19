@@ -19,11 +19,8 @@ class Page extends Model
      * @var array
      */
     protected $fillable = [
-        'published_at',
         'priority',
-        'important',
         'title',
-        'state',
         'subtitle',
         'content',
         'description',
@@ -191,14 +188,15 @@ class Page extends Model
     /**
      * Returns pages that are allowed to show.
      *
+     * @param  DateTime $currentDate
      * @return Builder
      */
-    public function scopeSeen(Builder $query): Builder
+    public function scopeSeen(Builder $query, DateTime $currentDate = null): Builder
     {
         return $query
             ->activeTemplate()
             ->active()
-            ->published()
+            ->published($currentDate)
         ;
     }
 }

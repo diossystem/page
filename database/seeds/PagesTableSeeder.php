@@ -52,7 +52,7 @@ class PagesTableSeeder extends Seeder
 
     protected function createChildren(Page $parent, int $numberOfChildren = 5)
     {
-        $child = $parent->children()->createMany(
+        $parent->children()->createMany(
             factory(Page::class, $numberOfChildren)
                 ->make([
                     'title' => 'Child page: ' . $parent->id . now()->format('H:i:s')
