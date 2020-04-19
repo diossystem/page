@@ -60,7 +60,7 @@ class CreateTemplatesTable extends Migration
              * "Услуги" может быть открыта страница со списком услуг и
              * ссылкой на редактирование страницы Услуги.
              */
-            $table->unsignedInteger('parent_id')->default(0)->index();
+            $table->unsignedInteger('parent_id')->nullable()->index();
 
              /**
               * Название шаблона.
