@@ -24,7 +24,7 @@ class Template extends Model
      */
     protected $fillable = [
         'title',
-        'description'
+        'description',
     ];
 
     /**
@@ -33,7 +33,7 @@ class Template extends Model
      * @var array
      */
     protected $casts = [
-        'active' => 'boolean'
+        'active' => 'boolean',
     ];
 
     /**

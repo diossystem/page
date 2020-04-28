@@ -30,7 +30,7 @@ class AdditionalFieldsOfTemplates extends Pivot
         'required',
         'primary',
         'important',
-        'priority'
+        'priority',
     ];
 
     /**

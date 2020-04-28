@@ -34,7 +34,7 @@ class Page extends Model
      * @var array
      */
     protected $dates = [
-        'published_at'
+        'published_at',
     ];
 
     /**
