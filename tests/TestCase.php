@@ -18,11 +18,6 @@ class TestCase extends OrchestraTestCase
         parent::setUp();
 
         $this->withFactories(__DIR__ . '/../database/factories');
-
-        $this->loadMigrationsFrom([
-            '--realpath' => realpath(__DIR__.'/../database/migrations/base'),
-            '--database' => 'testing',
-        ]);
     }
 
     protected function getPackageProviders($app)
@@ -41,11 +36,41 @@ class TestCase extends OrchestraTestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('database.default', 'testing');
-        $app['config']->set('database.connections.testing', [
-            'driver'   => 'sqlite',
-            'database' => ':memory:',
-            'prefix'   => '',
+        $app['config']->set('database.default', 'sqlite');
+        $app['config']->set('database.connections', [
+            'sqlite' => [
+                'driver'   => 'sqlite',
+                'database' => ':memory:',
+                'prefix'   => '',
+            ],
+            'mysql' => [
+                'driver' => 'mysql',
+                'host' => '127.0.0.1',
+                'port' => 3306,
+                'database' => 'testing',
+                'username' => 'testing',
+                'password' => '',
+                'unix_socket' => '',
+                'charset' => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
+                'prefix' => '',
+                'strict' => true,
+                'engine' => null,
+            ],
+        ]);
+    }
+
+    /**
+     * Loads the base migrations.
+     *
+     * @param  string $database
+     * @return void
+     */
+    protected function loadBaseMigrations(string $database = 'sqlite')
+    {
+        $this->loadMigrationsFrom([
+            '--realpath' => realpath(__DIR__.'/../database/migrations/base'),
+            '--database' => $database,
         ]);
     }
 }

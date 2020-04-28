@@ -16,6 +16,7 @@ class TemplateTest extends TestCase
     {
         parent::setUp();
 
+        $this->loadBaseMigrations();
         $this->seed(TemplatesTableSeeder::class);
     }
 

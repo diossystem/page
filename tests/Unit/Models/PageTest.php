@@ -18,6 +18,7 @@ class PageTest extends TestCase
     {
         parent::setUp();
 
+        $this->loadBaseMigrations();
         $this->seed(PagesTableSeeder::class);
     }
 

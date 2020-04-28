@@ -16,6 +16,7 @@ class AdditionalFieldTest extends TestCase
     {
         parent::setUp();
 
+        $this->loadBaseMigrations();
         $this->seed(AdditionalFieldsTableSeeder::class);
     }
 
