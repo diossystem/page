@@ -72,6 +72,18 @@ class AdditionalField extends Model
     }
 
     /**
+     * Returns additional fields with a given type.
+     *
+     * @param  Builder $query
+     * @param  string  $type
+     * @return Builder        
+     */
+    public function scopeType(Builder $query, string $type): Builder
+    {
+        return $query->where('type', $type);
+    }
+
+    /**
      * Returns additional field that have the active state or another given state.
      *
      * @param  Builder $query
