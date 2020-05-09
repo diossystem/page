@@ -243,6 +243,16 @@ class AdditionalFieldsOfPages extends Pivot
     }
 
     /**
+     * Returns the current cache of instance keys.
+     *
+     * @return array
+     */
+    public static function getCacheOfInstanceKeys(): array
+    {
+        return self::$instanceKeyCache;
+    }
+
+    /**
      * Returns true when the mapping has the instance type.
      *
      * @param  string|mixed $type
@@ -263,14 +273,31 @@ class AdditionalFieldsOfPages extends Pivot
         return is_string($this->defaultInstanceHandler) && class_exists($this->defaultInstanceHandler);
     }
 
-    /**
-     * Returns the current cache of instance keys.
-     *
-     * @return array
-     */
-    public static function getCacheOfInstanceKeys(): array
+    public function getDefaultInstanceHandlerClassName()
     {
-        return self::$instanceKeyCache;
+        return $this->hasDefaultInstanceHandler()
+            ? $this->defaultInstanceHandler
+            : null;
+        ;
+    }
+
+    public function getInstanceHandlerClassNameByType($type)
+    {
+        return $this->hasInstanceType($type)
+            ? $this->instanceTypeMapping[$type]
+            : null
+        ;
+    }
+
+    /**
+     * Returns a class name of a instance handler by the type.
+     *
+     * @param  string $type
+     * @return string|null
+     */
+    public function getInstanceHandlerClassNameOrDefaultClassName($type)
+    {
+        return getInstanceHandlerClassNameByType() ?? $this->getDefaultInstanceHandlerClassName();
     }
 
     // for one
@@ -279,16 +306,15 @@ class AdditionalFieldsOfPages extends Pivot
         /** @var string|mixed|null $type **/
         $type = $this->getInstanceType();
 
-        if (! $this->hasInstanceType($type)) {
-            if ($this->hasDefaultInstanceHandler()) {
-                /** @var string $className **/
-                $className = $this->defaultInstanceHandler;
-            } else {
-                return null;
-            }
-        } else {
-            $className = $this->instanceTypeMapping[$type];
+        /** @var string|null $className **/
+        $className = $this->getInstanceHandlerClassNameOrDefault($type);
+
+        if (! $className) {
+            return null;
         }
+
+        // TODO проверить существующий экземпляр и вернуть его
+        // иначе создать, присвоить и вернуть.
 
         $instance = new $className($this, $this->propertyOfInstanceValues);
 
@@ -335,42 +361,6 @@ class AdditionalFieldsOfPages extends Pivot
         // }
         //
         // return new Custom($this);
-    }
-
-    /**
-     * Returns a type on instance.
-     *
-     * @return string|null
-     */
-    // public function getInstanceType()
-    // {
-    //     return static::getInstanceTypeByKey($this->additional_field_id);
-    //     $this->instanceType;
-    //     // TODO может использовать значение в качестве помощи для извлечения
-    //     // данных, а может вообще его не использовать и реализовывать свою
-    //     // обработку данных.
-    //     // Также должен кэшировать результат, чтобы не вызывать повторно обработку
-    //     // данных.
-    //     // Кэширование резульата происходит по какому-то дополнительному связанному
-    //     // полю или ключу.
-    //     // В этом случае additional_field_id = $instanceTypeId
-    //     // Если значение уже было, то оно будет возвращено.
-    //
-    //     $this->instanceKeyCache[$this->additional_field_id];
-    //
-    //     // TODO Здесь может быть даже обращение к внутренним данным для получения типа
-    //     //
-    // }
-
-    /**
-     * Returns an instance type by a given type.
-     *
-     * @param  string|int $key
-     * @return string|null
-     */
-    public static function getInstanceTypeByKey($key)
-    {
-
     }
 
     /**
