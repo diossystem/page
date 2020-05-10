@@ -36,57 +36,69 @@ class AdditionalFieldsOfPages extends Pivot
         'values' => 'array',
     ];
 
-    protected $propertyOfInstanceValues = 'values';
+    /**
+     * The property that contains values to an entity.
+     *
+     * @var string
+     */
+    protected $propertyOfEntityValues = 'values';
 
     /**
-     * Type mapping of instance types and their handlers.
+     * Type mapping of entity types and their handlers.
      *
      * @var array
      */
-    protected $instanceTypeMapping = [
+    protected $entityTypeMapping = [
         'map' => \Dios\System\Page\Models\HandlersOfAdditionalFields\Map::class,
     ];
 
     /**
-     * A default instance handler class.
+     * A default entity handler class.
      *
      * @var string|null
      */
-    protected $defaultInstanceHandler = \Dios\System\Page\Models\HandlersOfAdditionalFields\DefaultHandler::class;
+    protected $defaultEntityHandler = \Dios\System\Page\Models\HandlersOfAdditionalFields\DefaultHandler::class;
 
     /**
-     * The cache of instance keys.
+     * The cache of entity keys.
      *
      * @var array
      */
-    protected static $instanceKeyCache = [];
+    protected static $entityKeyCache = [];
 
     /**
-     * The source that contains a type.
+     * The source that contains an entity type.
      * When set second value, then may to use caching of a result of the search
-     * instance key.
+     * entity key.
      *
      * Format that uses the cache: '<first_value>|<second_value>'
-     * The first_value is a path to get an instance key.
+     * The first_value is a path to get an entity key.
      * The second_value is a key for the cache.
      * Example: 'af.type|additional_field_id'
      *
      * Format that do not use the cache: '<value>'.
-     * The value is a path to get an instance key or it is a property of the current model.
+     * The value is a path to get an entity key or it is a property of the current model.
      * Example: 'code_name'
      *
      * @var string
      */
-    protected $sourceWithType = 'af.type|additional_field_id';
+    protected $sourceWithEntityType = 'af.type|additional_field_id';
 
     /**
-     * Instances are handlers of the attributes.
+     * An instance of the current entity.
      *
-     * @var array
+     * @var EntityHandlerInterface|null
      */
-    protected $instances = [
-        'values' => '<className>:af.type|additional_field_id',
-    ];
+    protected $instanceOfEntity;
+
+    // /**
+    //  * Instances are handlers of the attributes.
+    //  *
+    //  * @var array
+    //  */
+    // protected $instances = [
+    //     'values' => '<className>:af.type|additional_field_id',
+    // ];
 
     /**
      * Returns an additional field of the page.
@@ -118,73 +130,59 @@ class AdditionalFieldsOfPages extends Pivot
         return $this->belongsTo(Page::class);
     }
 
-    /**
-     * Returns an instance by the given name.
-     *
-     * @param  string $name
-     * @return Instance|null
-     */
-    public function getInstance(string $name)
-    {
-        // Источником значения служит поле БД или вызываемый метод get...Attribute
-        //
-        // Должен возвращать ссылку на сущность или сам объект. Ссылка для того,
-        // чтобы можно было манипулировать объектом
-    }
+    // /**
+    //  * Sets a new instance.
+    //  *
+    //  * @param string   $name
+    //  * @param Instance $instance
+    //  */
+    // public function setInstance(string $name, $instance)
+    // {
+    // }
 
     /**
-     * Sets a new instance.
-     *
-     * @param string   $name
-     * @param Instance $instance
-     */
-    public function setInstance(string $name, $instance)
-    {
-    }
-
-    /**
-     * Returns an instance type.
+     * Returns an entity type.
      *
      * @param  bool   $cache
      * @return string|mixed|null
      */
-    public function getInstanceType(bool $cache = true)
+    public function getEntityType(bool $cache = true)
     {
         /** @var array $sources **/
-        $sources = explode('|', $this->sourceWithType, 2);
+        $sources = explode('|', $this->sourceWithEntityType, 2);
 
         if (count($sources) === 2) {
             list($realSource, $linkToSource) = $sources;
 
             // Gets a key from the static cache
-            if ($cache && self::hasCacheInstanceKey($linkToSource)) {
-                return self::getCacheOfInstanceKey($linkToSource);
+            if ($cache && self::hasCacheEntityKey($linkToSource)) {
+                return self::getCacheOfEntityKey($linkToSource);
             }
 
             /** @var string|mixed|null $key **/
-            $key = $this->getInstanceKey($realSource);
+            $key = $this->getEntityKey($realSource);
 
             // Caches using $linkToSource
             if ($cache) {
-                self::addCacheOfInstanceKey($linkToSource, $key);
+                self::addCacheOfEntityKey($linkToSource, $key);
             }
 
             return $key;
         }
 
         return isset($sources[0])
-            ? $this->getInstanceKey($sources[0])
+            ? $this->getEntityKey($sources[0])
             : null
         ;
     }
 
     /**
-     * Returns instance key from its source.
+     * Returns an entity key from its source.
      *
      * @param  string $source
      * @return mixed|null
      */
-    protected function getInstanceKey(string $source)
+    protected function getEntityKey(string $source)
     {
         /** @var array $segments Segments to a value ***/
         $segments = explode('.', $source);
@@ -210,178 +208,150 @@ class AdditionalFieldsOfPages extends Pivot
     }
 
     /**
-     * Adds a new value of cache of instance keys.
+     * Adds a new value of cache of entity keys.
      *
      * @param string|mixed $key
      * @param string|mixed|null $value
      */
-    protected static function addCacheOfInstanceKey($key, $value)
+    protected static function addCacheOfEntityKey($key, $value)
     {
-        self::$instanceKeyCache[$key] = $value;
+        self::$entityKeyCache[$key] = $value;
     }
 
     /**
-     * Returns an instance key by its key index.
+     * Returns an entity key by its key index.
      *
      * @param  string|mixed $key
      * @return string|mixed|null
      */
-    public static function getCacheOfInstanceKey($key)
+    public static function getCacheOfEntityKey($key)
     {
-        return self::$instanceKeyCache[$key] ?? null;
+        return self::$entityKeyCache[$key] ?? null;
     }
 
     /**
-     * Returns true when the instance key is cached.
+     * Returns true when the entity key is cached.
      *
      * @param  string|mixed $key
      * @return bool
      */
-    public static function hasCacheInstanceKey($key): bool
+    public static function hasCacheEntityKey($key): bool
     {
-        return key_exists($key, self::$instanceKeyCache);
+        return key_exists($key, self::$entityKeyCache);
     }
 
     /**
-     * Returns the current cache of instance keys.
+     * Returns the current cache of entity keys.
      *
      * @return array
      */
-    public static function getCacheOfInstanceKeys(): array
+    public static function getCacheOfEntityKeys(): array
     {
-        return self::$instanceKeyCache;
+        return self::$entityKeyCache;
     }
 
     /**
-     * Returns true when the mapping has the instance type.
+     * Returns true when the mapping has the entity type.
      *
      * @param  string|mixed $type
      * @return bool
      */
-    public function hasInstanceType($type): bool
+    public function hasEntityType($type): bool
     {
-        return isset($this->instanceTypeMapping[$type]) && class_exists($this->instanceTypeMapping[$type]);
+        return isset($this->entityTypeMapping[$type]) && class_exists($this->entityTypeMapping[$type]);
     }
 
     /**
-     * Returns true when the default instance handler exists.
+     * Returns true when the default entity handler exists.
      *
      * @return bool
      */
-    public function hasDefaultInstanceHandler(): bool
+    public function hasDefaultEntityHandler(): bool
     {
-        return is_string($this->defaultInstanceHandler) && class_exists($this->defaultInstanceHandler);
+        return is_string($this->defaultEntityHandler) && class_exists($this->defaultEntityHandler);
     }
 
-    public function getDefaultInstanceHandlerClassName()
+    /**
+     * Returns the default entity handler class name.
+     *
+     * @return string|null
+     */
+    public function getDefaultEntityHandlerClassName()
     {
-        return $this->hasDefaultInstanceHandler()
-            ? $this->defaultInstanceHandler
+        return $this->hasDefaultEntityHandler()
+            ? $this->defaultEntityHandler
             : null;
         ;
     }
 
-    public function getInstanceHandlerClassNameByType($type)
+    /**
+     * Returns an entity handler class name by its type.
+     *
+     * @param  string $type
+     * @return string|null
+     */
+    public function getEntityHandlerClassNameByType($type)
     {
-        return $this->hasInstanceType($type)
-            ? $this->instanceTypeMapping[$type]
+        return $this->hasEntityType($type)
+            ? $this->entityTypeMapping[$type]
             : null
         ;
     }
 
     /**
-     * Returns a class name of a instance handler by the type.
+     * Returns a class name of an entity handler by the type.
      *
      * @param  string $type
      * @return string|null
      */
-    public function getInstanceHandlerClassNameOrDefaultClassName($type)
+    public function getEntityHandlerClassNameOrDefaultClassName($type)
     {
-        return getInstanceHandlerClassNameByType() ?? $this->getDefaultInstanceHandlerClassName();
+        return $this->getEntityHandlerClassNameByType($type) ?? $this->getDefaultEntityHandlerClassName();
     }
 
-    // for one
+    /**
+     * Returns an instance of the instance of the model from the attribute.
+     *
+     * @return EntityHandlerInterface|null
+     */
     public function getInstanceAttribute()
     {
+        return $this->getInstance();
+
+    }
+
+    /**
+     * Returns an instance of the current instance of the model.
+     * If the instance has not been initialized yet, this will be done.
+     *
+     * @return EntityHandlerInterface|null
+     */
+    public function getInstance()
+    {
+        if (! isset($this->instanceOfEntity)) {
+            $this->instanceOfEntity = $this->makeInstanceOfEntity();
+        }
+
+        return $this->instanceOfEntity;
+    }
+
+    /**
+     * Initializes an instance of the current entity and returns it.
+     *
+     * @return EntityHandlerInterface|null
+     */
+    public function makeInstanceOfEntity()
+    {
         /** @var string|mixed|null $type **/
-        $type = $this->getInstanceType();
+        $type = $this->getEntityType();
 
         /** @var string|null $className **/
-        $className = $this->getInstanceHandlerClassNameOrDefault($type);
+        $className = $this->getEntityHandlerClassNameOrDefaultClassName($type);
 
         if (! $className) {
             return null;
         }
 
-        // TODO проверить существующий экземпляр и вернуть его
-        // иначе создать, присвоить и вернуть.
-
-        $instance = new $className($this, $this->propertyOfInstanceValues);
-
-        return $instance;
-        // TODO возвращает преобразованный экземпляр данных из поля values.
-        // При этом должен быть получен тип поля и экземпляр должен создаваться один
-        // раз, т.к. обработка может быть долгой. Если экземпляр уже создан,
-        // то нужно просто его возвращать
-        // ->values => array
-        // ->instance => object by type
-        // Типы поля также желательно как-то кэшировать, чтобы не было дополнительных
-        // запросов к БД.
-        // Получается обработка данных должна происходить либо при извлечение данных
-        // из БД, либо на момент обращения к свойству.
-        // Должен расширять или быть совместим с Casting fields
-        //
-        // TODO должен расширяться трейтом.
-        // Может управляться, типа использование кэша классов или нет
-        // (каждому классу определенный тип),
-        // использование кэша типов или нет (каждому типу определенный ID из определенного
-        // поля). Причем может как статическим атрибутом быть, так и храниться в файле
-
-        // Если уже один раз поле возвращалось за запрос, то возвращаем его экземпляр
-        // if ($this->hasInstanceCache($this)) {
-        //     return $this->instanceCache[$this->id];
-        // }
-
-        // Если используется какой-то тип, то нужно определить класс и передать
-        // в него значения и вернуть экземпляр класса и закэшировать его
-        // $this->getInstanceType() -> любая обработка по получению типа,
-        // т.к. тип может храниться как в текущей модели, так и в любой другой
-        // связанной модели или вообще вычисляться из хранимых полей,
-        // т.е. быть внутри значения массива или определяться по умолчанию.
-        // Но по умолчанию может храниться в поле instance_type (или любом другом),
-        // т.е. нет значения по умолчанию, и может быть хоть type.
-        // $instanceType = 'type' or 'af.type'
-        //
-        // if ($this->additionalField->type != 'custom') {
-        //     // Определяем класс по его типу.
-        //     // Хранить пути к классам можем как в конфиге (не самый лучший путь),
-        //     // в Модели дополнительного поля,
-        //     // в текущей модели (логичнее, т.к. тип может храниться вместе с данными).
-        //     // Должно быть соотвествие поля Тип и его значению.
-        // }
-        //
-        // return new Custom($this);
+        return new $className($this, $this->propertyOfEntityValues);
     }
-
-    /**
-     * Returns a class name of the current type.
-     *
-     * @return string|null
-     */
-    public function getInstanceClass()
-    {
-        return static::getInstanceClassByType($type);
-    }
-
-    public static function getInstanceClassByType(string $type)
-    {
-
-    }
-
-    // public function getInstance($cache = true)
-    // {
-    //     // TODO возвращает экземлпяр вызываемого поля.
-    //     // Если включено кэширование и данные уже вызывались, то возвращает их
-    //     // снова, если до этого они не были изменены.
-    // }
 }
