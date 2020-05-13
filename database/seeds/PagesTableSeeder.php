@@ -48,6 +48,14 @@ class PagesTableSeeder extends Seeder
         factory(Page::class, 10)->create([
             'keywords_tag' => 'other',
         ]);
+
+        $pageWithManyChildren = factory(Page::class)->create([
+            'slug' => 'page-children',
+            'link' => 'page-children',
+            'title' => 'Parent page',
+        ]);
+
+        $this->createManyChildren($pageWithManyChildren, 2, 5);
     }
 
     protected function createChildren(Page $parent, int $numberOfChildren = 5)
@@ -59,5 +67,20 @@ class PagesTableSeeder extends Seeder
                 ])
                 ->toArray()
         );
+
+        return $parent->children;
+    }
+
+    protected function createManyChildren(Page $parent, int $depth, int $numberOfChildren = 5)
+    {
+        if ($depth >= 0) {
+            $depth--;
+
+            $children = $this->createChildren($parent, $numberOfChildren);
+
+            foreach ($children as $child) {
+                $this->createManyChildren($child, $depth, $numberOfChildren);
+            }
+        }
     }
 }
