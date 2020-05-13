@@ -199,4 +199,9 @@ class Page extends Model
             ->published($currentDate)
         ;
     }
+
+    public function newCollection(array $models = [])
+    {
+        return new PageCollection($models);
+    }
 }
