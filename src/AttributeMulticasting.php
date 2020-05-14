@@ -22,6 +22,7 @@ namespace Dios\System\Page;
 // Каждому имени класса соответствует свой обработчик. Чтобы добавить свой
 // интерфейс и обработчик, нужно расширить метод или переписать его
 // полностью.
+// 5. Типы классов можно сделать константами
 
 /**
  * The trait handlers models that have only one attribute
@@ -244,6 +245,43 @@ trait AttributeMulticasting
             return null;
         }
 
-        return new $className($this, $this->propertyOfEntityValues);
+        return $this->makeInstanceByInterfaceType($className);
+    }
+
+    /**
+     * Makes an instance of the class by using the interface type.
+     *
+     * @param  string $className
+     * @return MulticastingEntity|null
+     */
+    public function makeInstanceByInterfaceType(string $className)
+    {
+        /** @var string $interfaceType **/
+        $interfaceType = $this->getInterfaceTypeOfEntities();
+
+        switch ($interfaceType) {
+            case 'instance_from_model':
+                $instance = new $className($this, $this->propertyOfEntityValues);
+                break;
+            case 'related_entity':
+                $instance = new $className($this);
+                break;
+            default:
+            case 'simple':
+                $instance = new $className($this->{$this->propertyOfEntityValues});
+                break;
+        }
+
+        return $instance;
+    }
+
+    /**
+     * Returns an interface type that using by entities of the class.
+     *
+     * @return string|null
+     */
+    public function getInterfaceTypeOfEntities()
+    {
+        return $this->interfaceType ?? null;
     }
 }
