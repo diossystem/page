@@ -80,6 +80,8 @@ class AdditionalFieldsOfPages extends Pivot
      */
     protected $sourceWithEntityType = 'af.type|additional_field_id';
 
+    protected $interfaceType = 'instance_from_model';
+
     /**
      * Returns an additional field of the page.
      *
@@ -110,16 +112,6 @@ class AdditionalFieldsOfPages extends Pivot
         return $this->belongsTo(Page::class);
     }
 
-    // /**
-    //  * Sets a new instance.
-    //  *
-    //  * @param string   $name
-    //  * @param Instance $instance
-    //  */
-    // public function setInstance(string $name, $instance)
-    // {
-    // }
-
     /**
      * Returns an instance of the instance of the model from the attribute.
      *
@@ -128,6 +120,21 @@ class AdditionalFieldsOfPages extends Pivot
     public function getInstanceAttribute()
     {
         return $this->getInstance();
+    }
 
+    /**
+     * Sets values to the instance or the attribute.
+     *
+     * @param array $values
+     */
+    public function setInstanceAttribute(array $values)
+    {
+        $instance = $this->getInstance();
+
+        if ($instance) {
+            $this->fillFromArray($values);
+        } else {
+            $this->{$this->propertyOfEntityValues} = $values;
+        }
     }
 }
