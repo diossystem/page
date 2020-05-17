@@ -80,6 +80,11 @@ class AdditionalFieldsOfPages extends Pivot
      */
     protected $sourceWithEntityType = 'af.type|additional_field_id';
 
+    /**
+     * The instance type of entities.
+     *
+     * @var string
+     */
     protected $interfaceType = 'instance_from_model';
 
     /**
