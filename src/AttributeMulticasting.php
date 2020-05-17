@@ -22,7 +22,7 @@ namespace Dios\System\Page;
 // Каждому имени класса соответствует свой обработчик. Чтобы добавить свой
 // интерфейс и обработчик, нужно расширить метод или переписать его
 // полностью.
-// 5. Типы классов можно сделать константами
+// 6. Для каждого интерфейса разработать трейт.
 
 /**
  * The trait handlers models that have only one attribute
@@ -30,6 +30,27 @@ namespace Dios\System\Page;
  */
 trait AttributeMulticasting
 {
+    /**
+     * The type name is 'instance from model'.
+     *
+     * @var string
+     */
+    const INSTANCE_FROM_MODEL = 'instance_from_model';
+
+    /**
+     * THe type name is 'related_entity'.
+     *
+     * @var string
+     */
+    const RELATED_ENTITY = 'related_entity';
+
+    /**
+     * The type name is 'simple'.
+     *
+     * @var string
+     */
+    const SIMPLE = 'simple';
+
     /**
      * The cache of entity keys.
      *
@@ -260,14 +281,14 @@ trait AttributeMulticasting
         $interfaceType = $this->getInterfaceTypeOfEntities();
 
         switch ($interfaceType) {
-            case 'instance_from_model':
+            case self::INSTANCE_FROM_MODEL:
                 $instance = new $className($this, $this->propertyOfEntityValues);
                 break;
-            case 'related_entity':
+            case self::RELATED_ENTITY:
                 $instance = new $className($this);
                 break;
+            case self::SIMPLE:
             default:
-            case 'simple':
                 $instance = new $className($this->{$this->propertyOfEntityValues});
                 break;
         }
