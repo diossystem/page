@@ -20,7 +20,7 @@ You must install the package after installing Laravel.
 Install the package using **Composer**.
 
 ```bash
-composer require "dios/page:0.1.*"
+composer require "diossystem/page:0.1.*"
 ```
 
 Use migrations to prepare tables to the package.
