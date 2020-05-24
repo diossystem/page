@@ -2,15 +2,12 @@
 
 namespace Dios\System\Page\Models\HandlersOfAdditionalFields;
 
-use Exception;
-use Dios\System\Page\Models\AdditionalFieldsOfPages;
-use Illuminate\Database\Eloquent\Model;
-use Dios\System\Page\MulticastingInterfaces\InstanceFromModel;
+use Dios\System\Multicasting\Interfaces\SimpleArrayEntity;
 
 /**
  * Keeps data of a map.
  */
-class Map implements InstanceFromModel
+class Map implements SimpleArrayEntity
 {
     protected $title;
 
@@ -22,13 +19,9 @@ class Map implements InstanceFromModel
 
     protected $image;
 
-    function __construct(Model $af, string $property)
+    function __construct(array $values = null)
     {
-        if (! ($af instanceof AdditionalFieldsOfPages)) {
-            throw new Exception('The given instance is invalid.');
-        }
-
-        $this->fillFromArray($af->$property ?? []);
+        $this->fillFromArray($values ?? []);
     }
 
     /**

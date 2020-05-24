@@ -2,14 +2,16 @@
 
 namespace Dios\System\Page\Models\HandlersOfAdditionalFields;
 
+use Dios\System\Multicasting\Multicasting\SimpleArrayEntity;
+
 /**
  *
  */
-class DefaultHandler
+class DefaultHandler implements SimpleArrayEntity
 {
-    function __construct(AdditionalFieldsOfPages $af, string $property)
+    function __construct(array $values = null)
     {
-        $this->fillFromArray($af->$property);
+        $this->fillFromArray($values ?? []);
     }
 
     public function fillFromArray(array $values)
