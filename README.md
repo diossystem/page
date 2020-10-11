@@ -20,8 +20,21 @@ You must install the package after installing Laravel.
 Install the package using **Composer**.
 
 ```bash
-composer require "diossystem/page:0.1.*"
+composer require "diossystem/page"
 ```
+
+To get the latest version install the package from the github. Add the repository to your `composer.json`:
+
+```json
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/diossystem/page"
+        }
+    ]
+```
+
+After run the following command: `composer require diossystem/page`.
 
 Use migrations to prepare tables to the package.
 
