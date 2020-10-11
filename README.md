@@ -47,7 +47,7 @@ By default it includes the following controllers of web pages:
 
 **Example: The basic route list of the website**
 ```php
-use Belca\Page\Http\Middlewares\MaintenanceMode;
+use Dios\System\Page\Http\Middlewares;
 use Dios\System\Page\Http\Controllers\Website\HomeController;
 
 // It must be at the top in your route list
