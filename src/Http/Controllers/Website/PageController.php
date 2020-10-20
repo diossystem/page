@@ -34,8 +34,8 @@ class PageController extends Controller
      * Handles the HTTP-request and returns the HTTP-response.
      * The response may contain an HTML page.
      *
-     * @param  Request      $request
-     * @param  string       $url
+     * @param  Request  $request
+     * @param  string   $url
      * @return Response
      *
      * @throws PageNotFoundException
@@ -52,9 +52,7 @@ class PageController extends Controller
 
         $template = $this->getTemplate($data);
 
-        return response()
-            ->view($template, $data)
-        ;
+        return response()->view($template, $data);
     }
 
     /**

@@ -39,7 +39,7 @@ class HomeController
      * Handles the HTTP-request and returns the HTTP-response.
      * The response may contain an HTML page.
      *
-     * @param  Request      $request
+     * @param  Request   $request
      * @return Response
      */
     public function __invoke(Request $request)
@@ -52,9 +52,7 @@ class HomeController
 
         $template = $this->getTemplate($data);
 
-        return response()
-            ->view($template, $data)
-        ;
+        return response()->view($template, $data);
     }
 
     /**
