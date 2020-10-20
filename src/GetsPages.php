@@ -64,8 +64,11 @@ trait GetsPages
      *
      * @throws PageNotFoundException
      */
-    protected function skipOrFail($instance = null, string $url = null, string $message = null)
-    {
+    protected function skipOrFail(
+        $instance = null,
+        string $url = null,
+        string $message = null
+    ) {
         if (! $instance) {
             $this->throwException($url, $message);
         }
