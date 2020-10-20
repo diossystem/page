@@ -11,6 +11,39 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * Keeps data of a page.
+ *
+ * @property int $id An ID of the page
+ * @property string $title A page title
+ * @property string|null $subtitle A page subtitle
+ * @property string|null $content A page content
+ * @property string|null $discription A page description
+ * @property string|null $description_tag A description for the meta tag of the page head
+ * @property string|null $keywords_tag Keywords for the meta tag of the page head
+ * @property string|null $slug A slug of the page or a part of the link of the page
+ * @property string|null $link A full link to the page
+ * @property string $state A state of the page
+ * @property Carbon $published_at A date of the publication
+ * @property int $priority
+ * @property bool $important
+ * @property int|null $template_id
+ * @property int $author_id
+ * @property int|null $editor_id
+ * @property int|null $parent_id
+ * @property-read Template|null $template An instance of the related template
+ * @property-read Collection|AdditionalField[] $additionalFields Additional fields of the page
+ * @property-read Collection|AdditionalField[] $afs Additional fields of the page
+ * @property-read Page|null $parent A parent page of the page
+ * @property-read PageCollection $children Child pages of the page
+ * @method Builder state(string $state) Returns pages that have the given state.
+ * @method Builder slug(string $slug) Returns pages that have the given slug.
+ * @method Builder link(string $link) Returns pages that have the given link.
+ * @method Builder active(bool $active) Returns active pages.
+ * @method Builder activeTemplate() Returns pages that have active templates.
+ * @method Builder published(DateTime $currentDate = null) Returns published pages.
+ * @method Builder seen(DateTime $currentDate = null) Returns pages that are allowed to show.
+ */
 class Page extends Model
 {
     /**
@@ -200,7 +233,13 @@ class Page extends Model
         ;
     }
 
-    public function newCollection(array $models = [])
+    /**
+     * Returns a collection with pages.
+     *
+     * @param  array|Page[] $models
+     * @return PageCollection
+     */
+    public function newCollection(array $models = []): PageCollection
     {
         return new PageCollection($models);
     }

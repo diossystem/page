@@ -4,10 +4,27 @@ namespace Dios\System\Page\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * Keeps data of a template.
+ *
+ * @property int $id An ID of the template.
+ * @property string $title A user title of the template.
+ * @property string $description A description of the template.
+ * @property string $code_name A code name of the template.
+ * @property int|null $parent_id An ID of a parent of the template.
+ * @property bool $active A state of the template.
+ * @property int $priority A priority of the template.
+ * @property-read Collection $children Child templates of the template.
+ * @property-read Template|null $parent A parent template of the template.
+ * @property-read Collection $additionalFields Additional fields of the templates.
+ * @property-read Collection $afs Additional fields of the templates.
+ * @property-read PageCollection $pages Pages of the template.
+ */
 class Template extends Model
 {
     /**
