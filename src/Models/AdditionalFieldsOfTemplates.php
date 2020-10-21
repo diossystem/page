@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Additional fields of templates.
+ *
+ * @property int $additional_field_id An ID of the additional filed.
+ * @property bool $manual_control A state of the manual control.
+ * @property array $rules Rules of the additional field.
+ * @property bool $active A state of activity of the additional field.
+ * @property bool $required A state of need of the additional field.
+ * @property bool $primary A state of primary of the additional field.
+ * @property bool $important A state of importance of the additional field.
+ * @property int $priority A priority of the additional field.
  */
 class AdditionalFieldsOfTemplates extends Pivot
 {

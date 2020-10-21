@@ -24,6 +24,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read Collection $additionalFields Additional fields of the templates.
  * @property-read Collection $afs Additional fields of the templates.
  * @property-read PageCollection $pages Pages of the template.
+ * @method Builder parentId(int $parentId = 0) Returns templates that have the given ID of parent.
+ * @method Builder active(bool $state = true) Returns templates that have the active state or another given state.
+ * @method Builder name(string ...$name) Returns templates that have the given names.
  */
 class Template extends Model
 {
