@@ -31,7 +31,7 @@ class Map implements SimpleArrayEntity
      */
     public function fillFromArray(array $values)
     {
-        $this->title = $values['title'] ?? 'Map';
+        $this->title = $values['title'] ?? null;
         $this->address = $values['address'] ?? null;
         $this->phone = $values['phone'] ?? null;
         $this->phones = isset($values['phones']) && is_array($values['phones']) ? $values['phones'] : [];
