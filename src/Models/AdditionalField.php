@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * Keeps data of an additional field.
+ *
+ * @property string $title A title of the additional field.
+ * @property string|null $descirption A description of the additional field.
+ * @method Builder name(string ...$name) Returns additional fields that have the given names.
+ * @method Builder type(string $type) Returns additional fields with a given type.
+ * @method Builder active(bool $state = true) Returns additional field that have the active state or another given state.
+ */
 class AdditionalField extends Model
 {
     /**
@@ -76,7 +85,7 @@ class AdditionalField extends Model
      *
      * @param  Builder $query
      * @param  string  $type
-     * @return Builder        
+     * @return Builder
      */
     public function scopeType(Builder $query, string $type): Builder
     {
