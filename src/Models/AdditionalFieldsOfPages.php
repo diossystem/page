@@ -2,7 +2,7 @@
 
 namespace Dios\System\Page\Models;
 
-use Dios\System\Page\AttributeMulticasting;
+use Dios\System\Multicasting\AttributeMulticasting;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
