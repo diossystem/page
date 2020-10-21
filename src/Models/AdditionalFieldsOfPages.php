@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * Additional fields of pages.
  *
  * @property int $additional_field_id An ID of the additional field.
- * @property array $values Some values of the additional field.
+ * @property array|null $values Some values of the additional field.
  */
 class AdditionalFieldsOfPages extends Pivot
 {

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $additional_field_id An ID of the additional filed.
  * @property bool $manual_control A state of the manual control.
- * @property array $rules Rules of the additional field.
+ * @property array|null $rules Rules of the additional field.
  * @property bool $active A state of activity of the additional field.
  * @property bool $required A state of need of the additional field.
  * @property bool $primary A state of primary of the additional field.
