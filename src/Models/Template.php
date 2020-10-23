@@ -63,7 +63,7 @@ class Template extends Model
      */
     public function children(): HasMany
     {
-        return $this->hasMany(self::class, 'parent_id');
+        return $this->hasMany(static::class, 'parent_id');
     }
 
     /**
@@ -73,7 +73,7 @@ class Template extends Model
      */
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(self::class);
+        return $this->belongsTo(static::class);
     }
 
     /**

@@ -86,7 +86,7 @@ class Page extends Model
      */
     public function parent(): HasOne
     {
-        return $this->hasOne(self::class, 'id', 'parent_id');
+        return $this->hasOne(static::class, 'id', 'parent_id');
     }
 
     /**
@@ -96,7 +96,7 @@ class Page extends Model
      */
     public function children(): HasMany
     {
-        return $this->hasMany(self::class, 'parent_id');
+        return $this->hasMany(static::class, 'parent_id');
     }
 
     /**
