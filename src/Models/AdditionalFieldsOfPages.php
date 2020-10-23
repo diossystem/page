@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $additional_field_id An ID of the additional field.
  * @property array|null $values Some values of the additional field.
+ * @property-read MulticastingEntity|null $instance An instance of the current type of the AF.
  */
 class AdditionalFieldsOfPages extends Pivot
 {

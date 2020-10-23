@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property string $title A title of the additional field.
  * @property string|null $descirption A description of the additional field.
- * @property-read AdditionalFieldsOfPages $pivot A value of the current additional field of a page.
+ * @property-read AdditionalFieldsOfPages|null $pivot A value of the current additional field of a page.
  * @method Builder name(string ...$name) Returns additional fields that have the given names.
  * @method Builder type(string $type) Returns additional fields with a given type.
  * @method Builder active(bool $state = true) Returns additional field that have the active state or another given state.
