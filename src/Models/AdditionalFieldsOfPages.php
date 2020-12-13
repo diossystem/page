@@ -48,7 +48,7 @@ class AdditionalFieldsOfPages extends Pivot
      *
      * @var string
      */
-    protected $propertyOfEntityValues = 'values';
+    protected $propertyForEntity = 'values';
 
     /**
      * Type mapping of entity types and their handlers.
