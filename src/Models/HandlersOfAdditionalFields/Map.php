@@ -27,7 +27,7 @@ class Map implements SimpleArrayEntity
     /**
      * Fills an instance of the class by with values.
      *
-     * @param  array  $values
+     * @param array  $values
      */
     public function fillFromArray(array $values)
     {
